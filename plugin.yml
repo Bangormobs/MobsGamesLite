@@ -1,0 +1,8 @@
+name: MobsGamesLite
+main: uk.co.mobsoc.mglite.Plugin
+version: 0.1
+load : POSTWORLD
+commands:
+   game:
+      description: The Game
+      usage: /game [reload|alljoin|spectate]
