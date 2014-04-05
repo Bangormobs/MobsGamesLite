@@ -1,5 +1,6 @@
 package uk.co.mobsoc.mglite;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
@@ -62,7 +63,8 @@ public class WorldUnloader implements Runnable{
 			System.out.println("Players still on death screen : "+s);
 		}else{
 			System.out.println("Unloading '"+world+"' complete");
-
+			File dest = new File(world);
+			Plugin.delete(dest.getAbsoluteFile());
 			unloading.remove(this);
 			return;
 		}
