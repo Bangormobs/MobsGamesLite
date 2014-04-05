@@ -164,6 +164,8 @@ public class Plugin extends JavaPlugin {
 		currentWorld = newFolderName;
 		Location newSpawn = Bukkit.getWorld(newFolderName).getSpawnLocation();
 		for(Player p : Bukkit.getOnlinePlayers()){
+			p.setHealth(20f);
+			p.setFoodLevel(20);
 			p.teleport(newSpawn);
 		}
 		return null;
