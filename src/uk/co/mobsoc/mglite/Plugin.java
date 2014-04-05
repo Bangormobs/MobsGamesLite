@@ -108,6 +108,8 @@ public class Plugin extends JavaPlugin {
     				}
     			}
     			return true;
+    		}else if(args[0].equalsIgnoreCase("secret")){
+    			sender.sendMessage("The secret is... timj11dude wrote this...");
     		}
     	}
     	return false;
@@ -117,7 +119,7 @@ public class Plugin extends JavaPlugin {
     	return name.replaceAll("/[^a-zA-Z0-9_-]/", "");
     }
 	
-	public static String loadWorld(String worldName){
+    public static String loadWorld(String worldName){
 		if(currentWorld != null){ return "Another world is already loaded!"; }
 		if(worldName == null){ return "Cannot accept NULL world"; }
 		worldName = cleanWorldName(worldName);
