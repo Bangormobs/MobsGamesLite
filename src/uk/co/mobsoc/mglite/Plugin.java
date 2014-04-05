@@ -111,27 +111,27 @@ public class Plugin extends JavaPlugin {
     			}
     			return true;
     		}else if(args[0].equalsIgnoreCase("pvp")){
-    			if(args.length!=2){
+    			if(args.length!=3){
     				sender.sendMessage("/game pvp [on/off]");
     				return true;
     			}
     			if(sender.hasPermission("games.pvp")){
     				if(args[1].equalsIgnoreCase("off")){
-    					if(!Bukkit.getworld(spawnWorld).getPvP()){
-		    				Bukkit.getworld(spawnWorld).setPvP(false)
+    					if(!Bukkit.getWorld(spawnWorld).getPVP()){
+		    				Bukkit.getWorld(spawnWorld).setPVP(false);
 	    					sender.sendMessage("Disabling PVP on lobby world");
 	    					return true;
     					}else{
     						sender.sendMessage("PVP is already disabled");
-    						return true:
+    						return true;
     					}
     				}else{
-    					if(Bukkit.getworld(spawnWorld).getPvP()){
-	    					Bukkit.getworld(spawnWorld).setPvP(true)
+    					if(Bukkit.getWorld(spawnWorld).getPVP()){
+	    					Bukkit.getWorld(spawnWorld).setPVP(true);
 	    					sender.sendMessage("Enabling PVP on lobby world");
 	    					return true;
     					}else{
-    						senser.sendMessage("PVP is already enabled");
+    						sender.sendMessage("PVP is already enabled");
     						return true;
     					}
     				}
@@ -139,11 +139,6 @@ public class Plugin extends JavaPlugin {
     				sender.sendMessage("Need permission to change pvp setting");
     				return true;
     			}
-    			if(args.length!=3){
-    				sender.sendMessage("/game pvp [on/off]");
-    				return true;
-    			}
-    		}
     		}else if(args[0].equalsIgnoreCase("secret")){
     			sender.sendMessage("The secret is... timj11dude wrote this...");
     		}
