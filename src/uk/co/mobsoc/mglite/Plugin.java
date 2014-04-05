@@ -145,7 +145,6 @@ public class Plugin extends JavaPlugin {
     		}else if(args[0].equalsIgnoreCase("secret")){
     			sender.sendMessage("The secret is... timj11dude wrote this...");
     		}
-    		
     	}
     	return false;
     }
