@@ -5,4 +5,4 @@ load : POSTWORLD
 commands:
    game:
       description: The Game
-      usage: /game [reload|alljoin|spectate]
+      usage: /game [reload|alljoin|spectate|pvp]
