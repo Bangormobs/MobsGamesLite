@@ -63,8 +63,8 @@ public class WorldUnloader implements Runnable{
 			System.out.println("Players still on death screen : "+s);
 		}else{
 			System.out.println("Unloading '"+world+"' complete");
-			File dest = new File(world);
-			Plugin.delete(dest.getAbsoluteFile());
+			File dest = new File(world).getAbsoluteFile();
+			Plugin.delete(dest);
 			unloading.remove(this);
 			return;
 		}

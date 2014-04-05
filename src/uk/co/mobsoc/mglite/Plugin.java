@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -118,30 +120,49 @@ public class Plugin extends JavaPlugin {
     public static String cleanWorldName(String name){
     	return name.replaceAll("/[^a-zA-Z0-9_-]/", "");
     }
+    
+    public static ArrayList<String> usedNames= new ArrayList<String>();
+    public static String getUnusedWorldName(){
+    	String random = randomString();
+    	while(usedNames.contains(random)){
+    		random = randomString();
+    	}
+    	usedNames.add(random);
+    	return random;
+    }
+    
+    public static String randomString(){
+    	UUID uuid = UUID.randomUUID();
+    	return uuid.toString();
+    }
 	
     public static String loadWorld(String worldName){
 		if(currentWorld != null){ return "Another world is already loaded!"; }
 		if(worldName == null){ return "Cannot accept NULL world"; }
 		worldName = cleanWorldName(worldName);
 		
-		if(spawnWorld.equalsIgnoreCase(worldName)){ return "Cannot reload spawn world"; }
-		if(Bukkit.getWorld(worldName)!=null){ return "World already loaded!"; }
-		if(WorldUnloader.isUnloading(worldName)){ return "World is still unloading from its last use!"; }
+		//if(spawnWorld.equalsIgnoreCase(worldName)){ return "Cannot reload spawn world"; }
+		//if(Bukkit.getWorld(worldName)!=null){ return "World already loaded!"; }
+		//if(WorldUnloader.isUnloading(worldName)){ return "World is still unloading from its last use!"; }
+		if(WorldUnloader.unloading.size()!=0){
+			return "A world is still waiting to unload!";
+		}
 		String s = "Loading new Game map - '"+worldName+"'";
 		//Bukkit.unloadWorld(worldName, false);
 		File zip = new File("plugins/MobsGamesLite/"+worldName+".zip");
 		if(!zip.exists()){
 			return "Couldn't find file 'plugins/MobsGamesLite/"+worldName+".zip'";
 		}
-		File dest = new File(worldName);
-		delete(dest.getAbsoluteFile());
+		String newFolderName = getUnusedWorldName();
+		File dest = new File(newFolderName);
+		//delete(dest.getAbsoluteFile());
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.sendMessage(s);
 		}
 		zipUnzip(zip, dest);
-		Bukkit.getServer().createWorld(new WorldCreator(worldName));
-		currentWorld = worldName;
-		Location newSpawn = Bukkit.getWorld(worldName).getSpawnLocation();
+		Bukkit.getServer().createWorld(new WorldCreator(newFolderName));
+		currentWorld = newFolderName;
+		Location newSpawn = Bukkit.getWorld(newFolderName).getSpawnLocation();
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.teleport(newSpawn);
 		}
@@ -149,6 +170,7 @@ public class Plugin extends JavaPlugin {
 	}
 	
 	public static void delete(File location){
+		if(!location.exists()){ System.out.println("Does not exist : "+location); return; }
 		if(location.isDirectory()){
 			for(File file : location.listFiles()){
 				delete(file);
