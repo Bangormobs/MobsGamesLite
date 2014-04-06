@@ -27,6 +27,7 @@ public class Plugin extends JavaPlugin {
 		
 		// Due to internal working of some sort of magic, the world defined in server.properties cannot ever be unloaded.
 		spawnWorld = Bukkit.getWorlds().get(0).getName();
+		Bukkit.getWorlds().get(0).setPVP(getConfig().getBoolean("lobbypvp",true));
 		SpectateListener sl = new SpectateListener();
 		RespawnListener rl = new RespawnListener();
 		Bukkit.getPluginManager().registerEvents(sl, this);
@@ -117,18 +118,22 @@ public class Plugin extends JavaPlugin {
     			}
     			if(sender.hasPermission("games.pvp")){
     				if(args[1].equalsIgnoreCase("off")){
-    					if(!Bukkit.getWorld(spawnWorld).getPVP()){
+    					if(Bukkit.getWorld(spawnWorld).getPVP()){
 		    				Bukkit.getWorld(spawnWorld).setPVP(false);
 	    					sender.sendMessage("Disabling PVP on lobby world");
+	    					getConfig().set("lobbypvp", false);
+	    					saveConfig();
 	    					return true;
     					}else{
     						sender.sendMessage("PVP is already disabled");
     						return true;
     					}
     				}else{
-    					if(Bukkit.getWorld(spawnWorld).getPVP()){
+    					if(!Bukkit.getWorld(spawnWorld).getPVP()){
 	    					Bukkit.getWorld(spawnWorld).setPVP(true);
 	    					sender.sendMessage("Enabling PVP on lobby world");
+	    					getConfig().set("lobbypvp", true);
+	    					saveConfig();
 	    					return true;
     					}else{
     						sender.sendMessage("PVP is already enabled");
