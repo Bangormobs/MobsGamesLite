@@ -111,7 +111,7 @@ public class Plugin extends JavaPlugin {
     			}
     			return true;
     		}else if(args[0].equalsIgnoreCase("pvp")){
-    			if(args.length!=3){
+    			if(args.length!=2){
     				sender.sendMessage("/game pvp [on/off]");
     				return true;
     			}
